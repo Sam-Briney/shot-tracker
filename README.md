@@ -3,7 +3,7 @@ shot-tracker is a project which measures the angle of a basketball as it approac
 
 This project has been tested on Windows 10 and Ubuntu 18.04.
 
-![Image of Software] (https://github.com/Sam-Briney/shot-tracker/blob/master/demo/report.png)
+![Image of Software](/demo/report.png)
 
 # Installation
 The software is written in Python 2.7 and is most likely compatible with any Python 2.x version although it is untested with may versions. See https://wiki.python.org/moin/BeginnersGuide/Download for installation instructions.
