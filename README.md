@@ -21,7 +21,7 @@ The software is written in Python 2.7 and is most likely compatible with any Pyt
 4. Playsound, install via pip
 
   ```$ pip install playsound```
-  
+
 5. The opencv contrib modules can be installed via pip
 
   ```$ pip install opencv-contrib-python```
