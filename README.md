@@ -15,7 +15,6 @@ The software is written in Python 2.7 and is most likely compatible with any Pyt
 
 ```$ sudo apt-get install python-opencv```
 
-   3. If you're using another Linux distribution you're probably fully capable of figuring this out.
 2. Kivy, see https://kivy.org/doc/stable/installation/installation.html for installation instructions.
 3. Numpy, in case you didn't install Numpy with OpenCV, see https://scipy.org/install.html for instructions.
 4. Playsound, install via pip
