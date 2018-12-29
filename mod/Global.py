@@ -7,7 +7,7 @@ shots = []
 
 shotsFiltered = []
 
-video = False
+video = 0
 
 openedCalibration = False
 
