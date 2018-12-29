@@ -52,5 +52,5 @@ The system uses the color differences of the ball verses the background to track
 3. The optimum angle for a shooter is 45 degrees. But, if the camera is set up at an off angle this reading will not be the correct angle. To avoid this, the shooter should stay in one place and the camera should be set up as described in step 2 of the **Calibration** section of this document.
 4. If the software seems to have made a mistake with the tracking of a shot, that shot may be removed from the report by clicking *Edit Results*.
 5. Click **Save Data** to save the results as a .csv file. This format can be easily opened using Microsoft Excel or LibreOffice Calc. The raw data saved contains the coefficients of two separate models fitting the data.
-  1. The first model returns the y coordinate as a function of the x coordinate.
-  2. The second model returns the y coordinate as a function of time.
+   1. The first model returns the y coordinate as a function of the x coordinate.
+   2. The second model returns the y coordinate as a function of time.
