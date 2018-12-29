@@ -10,7 +10,7 @@ The software is written in Python 2.7 and is most likely compatible with any Pyt
 
 ### Other Dependencies
 1. OpenCV Python: tested on version 3.4.x.
-  1. For Windows see https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.htmlfor install instructions. Installing from the prebuilt binaries should be sufficient.
+  - For Windows see https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.htmlfor install instructions. Installing from the prebuilt binaries should be sufficient.
   2. For Ubuntu, simply use
 
 ```$ sudo apt-get install python-opencv```
