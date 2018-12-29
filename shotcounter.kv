@@ -1,0 +1,389 @@
+ScreenManager:
+    id: sm
+    MenuScreen:
+        name: "menu"
+        manager: sm
+    SetColorScreen:
+        name: "setColor"
+        manager: sm
+    LocateBasketScreen:
+        name: "locateBasket"
+        manager: sm
+    TrackShotsScreen:
+        name: "trackShots"
+        manager: sm
+    OpenCalibrationScreen:
+        name: "openCalibration"
+        manager: sm
+    CalibrateColorFromFileScreen:
+        name: "calibrateColorFromFile"
+        manager: sm
+    SetInputScreen:
+        name: "setInput"
+        manager: sm
+    SelectVideoScreen:
+        name: "selectVideo"
+        manager: sm
+    SelectCamScreen:
+        name: "selectCam"
+        manager: sm
+    FalsePosScreen:
+        name: "falsePos"
+        manager: sm
+    ReportScreen:
+        name: "report"
+        manager: sm
+    SaveCalScreen:
+        name: "saveCal"
+        manager: sm
+    SaveDataScreen:
+        name: "saveData"
+        manager: sm
+    EditResultsScreen:
+        name: "editResults"
+        manager: sm
+
+<MenuScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            text: "Calibrate"
+            on_press: root.manager.current = "locateBasket"
+        Button:
+            text: "Set Input"
+            on_press: root.manager.current = "setInput"
+        Button:
+            text: "Open previous calibration"
+            on_press: root.manager.current = "openCalibration"
+
+
+<SetColorScreen>:
+    on_enter: root.setColor()
+
+    GridLayout:
+        rows: 3
+        cols: 1
+        RelativeLayout:
+            IconButton:
+                id: img
+                on_press: root.selectColor(self, args)
+        GridLayout:
+            size_hint_y: None
+            height: 100
+            rows: 3
+            cols: 4
+            Label:
+                text: "St. deviation:"
+            Label:
+                id: std
+                text: ""
+            Label:
+                text: "Radius:"
+            TextInput:
+                id: radius
+                text: "13"
+            Label:
+                text: "Samples"
+            Label:
+                id: samples
+                text: "0"
+            Label:
+                text: "Sensitivity: " + str(root.ids.sensitivity.value)
+            Slider:
+                id: sensitivity
+                min: 0
+                max: 100
+                value: 30
+                step: 1
+                value_track: True
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_press: root.cancel()
+            Button:
+                text: "Toggle filter"
+                on_press: root.toggleFilter()
+            Button:
+                text: "Play/Pause"
+                on_press: root.playPause()
+            Button:
+                text: "Next"
+                on_press: root.save()
+
+<LocateBasketScreen>:
+    on_enter: root.locateBasket(self)
+    GridLayout:
+        rows: 3
+        cols: 1
+        BoxLayout:
+            height: 30
+            size_hint_y: None
+            Label:
+                text: "Please click on the rim"
+        RelativeLayout:
+            IconButton:
+                id: img
+                on_press: root.selectBasket(self, args)
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_press: root.cancel()
+            Button:
+                text: "Next"
+                on_press: root.done()
+
+<FalsePosScreen>:
+    on_enter: root.findSpots()
+    GridLayout:
+        rows: 3
+        cols: 1
+        BoxLayout:
+            height: 30
+            size_hint_y: None
+            Label:
+                text: "Please click on any false positives"
+        RelativeLayout:
+            IconButton:
+                id: img
+                on_press: root.deadSpot(self, args)
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_press: root.cancel()
+            Button:
+                text: "Next"
+                on_press: root.done()
+
+<TrackShotsScreen>:
+    on_enter: root.trackShots(self)
+    BoxLayout:
+        orientation: "vertical"
+        RelativeLayout:
+            IconButton:
+                id: img
+                on_press: root.remPoint(self, args)
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Label:
+                id: numShots
+                text: "Shot: 0"
+            Label:
+                id: lastAngle
+                text: "Last Angle = ?"
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            ToggleButton:
+                text: "Audio"
+                on_state: root.toggleAudio(self, args)
+                state: 'down'
+                id: audio
+            Button:
+                text: "Delete Last"
+                on_press: root.deleteLast()
+            Button:
+                text: "Done"
+                on_press: root.submit()
+
+<ReportScreen>:
+    on_enter: root.generate()
+    BoxLayout:
+        GridLayout:
+            size_hint_x: None
+            width: 325
+            rows: 5
+            cols: 2
+            Label:
+                text: "Shots Measured:"
+            Label:
+                id: shotsTaken
+                text: ""
+            Label:
+                text: "Average angle:"
+            Label:
+                id: averageAngle
+                text: ""
+            Label:
+                text: "Median Angle:"
+            Label:
+                id: medianAngle
+                text: ""
+            Label:
+                text: "St. Deviation:"
+            Label:
+                id:stdAngle
+                text: ""
+            Label:
+                text: "Distance St. Deviation: "
+            Label:
+                id: distStd
+                text: ""
+        BoxLayout:
+            Image:
+                id: traceImage
+    BoxLayout:
+        size_hint_y: None
+        height: 30
+        Button:
+            text: "Save Data"
+            on_press: root.manager.current = "saveData"
+        Button:
+            text: "Edit Results"
+            on_press: root.manager.current = "editResults"
+        Button:
+            text: "Finish without saving"
+            on_press: root.manager.current = "menu"
+
+<EditResultsScreen>:
+    on_enter: root.editResults(self)
+    GridLayout:
+        cols: 2
+        rows: 1
+        BoxLayout:
+            orientation: "vertical"
+            Label:
+                text: "Shots: click to remove or restore"
+                height: 30
+                size_hint_y:None
+            ScrollView:
+                size: self.size
+                GridLayout:
+                    id: tableAngles
+                    cols: 1
+        Image:
+            id: img
+
+    BoxLayout:
+        size_hint_y: None
+        height: 30
+        Button:
+            text: "Done"
+            on_press: root.done()
+        Button:
+            text: "Cancel"
+            on_press: root.cancel()
+
+<OpenCalibrationScreen>:
+    on_enter: root.listCalibrations(self)
+    BoxLayout:
+        orientation: "vertical"
+        ScrollView:
+            size: self.size
+            id: sv
+        Button:
+            text: "Back to menu"
+            on_press: root.manager.current = "menu"
+            size_hint_y: None
+            height: 30
+<CalibrateColorFromFileScreen>:
+    on_enter: root.selectVideo()
+    canvas:
+
+<SetInputScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            text: "Web Cam"
+            on_press: root.setInputWebCam()
+        Button:
+            text: "Video File"
+            on_press: root.manager.current = "selectVideo"
+
+<SelectVideoScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        FileChooserIconView:
+            id: fileChooser
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(fileChooser.path, fileChooser.selection)
+
+<SelectCamScreen>:
+    on_enter: root.listCameras()
+    BoxLayout:
+        orientation: "vertical"
+        ScrollView:
+            size: self.size
+            id: sv
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+<SaveCalScreen>:
+    on_enter: root.list()
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint_y: None
+            text: "Name calibration or click Cancel to continue without saving."
+        ListView:
+            id: list
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Label:
+                size_hint_x: None
+                width: 100
+                text: "File Name:"
+            TextInput:
+                multiline: False
+                id: fName
+                text: "name"
+            Label:
+                size_hint_x: None
+                width: 50
+                text: ".json"
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+            Button:
+                text: "Save"
+                on_release: root.save()
+
+<SaveDataScreen>:
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.manager.current = "report"
+
+            Button:
+                text: "Save"
+                on_release: root.save(filechooser.path, text_input.text)
